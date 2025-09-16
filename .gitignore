@@ -8,4 +8,7 @@ next-env.d.ts
 .vscode/*
 
 # files
-Notes.md
+Journal.md
+Logic breakdown.md
+src/data.js
+Appwrite.md
