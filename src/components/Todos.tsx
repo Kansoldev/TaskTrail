@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import TodoHeader from "./TodoHeader";
 import TodoItem from "./TodoItem";
 
@@ -13,9 +16,11 @@ type Task = {
 };
 
 const Todos = ({ taskslist }: { taskslist: Record<string, Task[]> }) => {
+  const [tasks, setTasks] = useState(taskslist);
+
   return (
     <>
-      {Object.entries(taskslist).map(([date, tasks], index) => (
+      {Object.entries(tasks).map(([date, tasks], index) => (
         <section
           key={index}
           className={`xl:w-2/3 ${index !== 0 ? "mt-10" : ""}`}
