@@ -1,3 +1,5 @@
+"use client";
+
 import { Query } from "appwrite";
 import Todos from "@/components/Todos";
 import { databases } from "../lib/appwrite";
