@@ -1,10 +1,12 @@
+import { Query } from "appwrite";
 import Todos from "@/components/Todos";
 import { databases } from "../lib/appwrite";
 
 export default async function Page() {
   const todosData = await databases.listDocuments(
     "688e4b54001f413aa5e0",
-    "68ac581e00184d238450"
+    "68ac581e00184d238450",
+    [Query.orderDesc("$createdAt")]
   );
 
   const taskslist = todosData.documents.reduce((dates, task) => {
