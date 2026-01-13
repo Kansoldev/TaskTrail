@@ -44,8 +44,8 @@ const Todos = ({ taskslist }: { taskslist: Record<string, Task[]> }) => {
     createdAtTasks.unshift(newTask);
 
     setTasks({
-      ...tasks,
       [createdAt]: createdAtTasks,
+      ...tasks,
     });
   }
 
