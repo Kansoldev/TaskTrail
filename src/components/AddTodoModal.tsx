@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, ChangeEvent } from "react";
-import { ID } from "appwrite";
-import { databases } from "../lib/appwrite";
+import { databases, ID } from "@/lib/appwrite";
 
 const AddTodoModal = ({ showModal, onShow, onTaskUpdate }) => {
   const [newTodos, setNewTodos] = useState({

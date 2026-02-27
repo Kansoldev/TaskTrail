@@ -1,5 +1,4 @@
-import { Query } from "appwrite";
-import { databases } from "../lib/appwrite";
+import { databases, Query } from "@/lib/appwrite";
 import Todos from "@/components/Todos";
 
 export const dynamic = "force-dynamic";
