@@ -3,7 +3,7 @@
 import { useState, ChangeEvent } from "react";
 import { databases, ID } from "@/lib/appwrite";
 
-const AddTodoModal = ({ showModal, onShow, onTaskUpdate }) => {
+const AddTodoModal = ({ showModal, onShow, onAddTask}) => {
   const [newTodos, setNewTodos] = useState({
     title: "",
     description: "",
@@ -60,7 +60,7 @@ const AddTodoModal = ({ showModal, onShow, onTaskUpdate }) => {
         }
       );
 
-      onTaskUpdate({
+      onAddTask({
         $id: task.$id,
         title: task.title,
         description: task.description,

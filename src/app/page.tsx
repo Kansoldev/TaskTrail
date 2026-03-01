@@ -10,20 +10,9 @@ export default async function Page() {
     [Query.orderDesc("$createdAt")]
   );
 
-  const taskslist = todosData.documents.reduce((dates, task) => {
-    const createdAt = new Date(task.$createdAt).toDateString();
-
-    if (!dates[createdAt]) {
-      dates[createdAt] = [];
-    }
-
-    dates[createdAt].push(task);
-    return dates;
-  }, {});
-
   return (
     <main className="container px-4 mx-auto">
-      <Todos taskslist={taskslist} />
+      <Todos data={todosData.documents} />
     </main>
   );
 }

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import TodoHeader from "./TodoHeader";
 import TodoItem from "./TodoItem";
-import AddTodoModal from "@/components/AddTodoModal";
+import AddTodoModal from "./AddTodoModal";
 
 type Task = {
   title: string;
@@ -17,41 +17,39 @@ type Task = {
   $collectionId: string;
 };
 
-/*
-  This variable builds up the new set of tasks to be added
-  in the state so nothing gets lost. If I put this variable
-  inside handleTaskUpdate(), each time the function re-runs,
-  it will empty the array and erase the previous data.
-*/
-let createdAtTasks = [];
+type TasksByDate = Record<string, Task[]>
 
-const Todos = ({ taskslist }: { taskslist: Record<string, Task[]> }) => {
-  const [tasks, setTasks] = useState(taskslist);
+const Todos = ({ data }: { data: Task[]}) => {
+  const [todos, setTodos] = useState(data);
   const [showModal, setShowModal] = useState(false);
+  const [taskStatus, setTaskStatus] = useState(false);
 
-  function handleTaskUpdate(newTask) {
-    const createdAt = new Date(newTask.$createdAt).toDateString();
+  /*
+    This taskslist variable is just for presentation purposes, It is not the data
+    to be used by the application. It's the original data that comes from AppWrite 
+    I should be using, not the one I transformed.
+  */
+  const tasksList: TasksByDate = todos.reduce((dates, task) => {
+    const createdAt = new Date(task.$createdAt).toDateString();
 
-    /*
-      Check if the date already exists in `tasks` to get
-      the previously added todos before pushing the new one
-    */
-    if (tasks.hasOwnProperty(createdAt)) {
-      createdAtTasks = tasks[createdAt];
+    if (!dates[createdAt]) {
+      dates[createdAt] = [];
     }
 
-    // Push the new task to the first position in the array
-    createdAtTasks.unshift(newTask);
+    dates[createdAt].push(task);
+    return dates;
+  }, {});
 
-    setTasks({
-      [createdAt]: createdAtTasks,
-      ...tasks,
-    });
+  function handleAddTask(newTask) {
+    setTodos([
+      newTask,
+      ...todos
+    ]);
   }
 
   return (
     <>
-      {Object.entries(tasks).map(([date, tasks], index) => (
+      {Object.entries(tasksList).map(([date, tasks], index) => (
         <section
           key={index}
           className={`xl:w-2/3 ${index !== 0 ? "mt-10" : ""}`}
@@ -59,7 +57,11 @@ const Todos = ({ taskslist }: { taskslist: Record<string, Task[]> }) => {
           <TodoHeader date={date} noOfTasks={tasks.length} />
           <div className="todos">
             {tasks.map((task, index) => (
-              <TodoItem key={index} task={task} index={index} />
+              <TodoItem
+                key={index}
+                task={task}
+                index={index}
+              />
             ))}
           </div>
         </section>
@@ -77,7 +79,7 @@ const Todos = ({ taskslist }: { taskslist: Record<string, Task[]> }) => {
       <AddTodoModal
         showModal={showModal}
         onShow={() => setShowModal(!showModal)}
-        onTaskUpdate={handleTaskUpdate}
+        onAddTask={handleAddTask}
       />
     </>
   );
