@@ -1,4 +1,4 @@
-const TodoItem = ({ task, index }) => {
+const TodoItem = ({ task, index, onStatusUpdate }) => {
   return (
     <div
       className={`input-group flex items-center justify-between ${
@@ -6,8 +6,17 @@ const TodoItem = ({ task, index }) => {
       }`}
     >
       <div className="todo">
-        <input type="checkbox" id={task.title} />
-        <label htmlFor={task.title} className="ml-8 text-xl">
+        <input
+          type="checkbox"
+          id={task.title}
+          onChange={() => onStatusUpdate(task.$id)}
+          checked={task.completed}
+        />
+        
+        <label
+          htmlFor={task.title}
+          className={`ml-8 text-xl ${task.completed ? "line-through" : ""}`}
+        >
           {task.title}
         </label>
       </div>

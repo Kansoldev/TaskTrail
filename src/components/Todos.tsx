@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { databases } from "@/lib/appwrite";
 import TodoHeader from "./TodoHeader";
 import TodoItem from "./TodoItem";
 import AddTodoModal from "./AddTodoModal";
@@ -9,6 +10,7 @@ import AddTodoModal from "./AddTodoModal";
 type Task = {
   title: string;
   description: string;
+  completed: boolean;
   $id: string;
   $sequence: number;
   $createdAt: string;
@@ -22,7 +24,6 @@ type TasksByDate = Record<string, Task[]>
 const Todos = ({ data }: { data: Task[]}) => {
   const [todos, setTodos] = useState(data);
   const [showModal, setShowModal] = useState(false);
-  const [taskStatus, setTaskStatus] = useState(false);
 
   /*
     This taskslist variable is just for presentation purposes, It is not the data
@@ -47,6 +48,37 @@ const Todos = ({ data }: { data: Task[]}) => {
     ]);
   }
 
+  async function getTodoID(todoID: string) {
+    return todos.filter(todo => todo.$id === todoID);
+  }
+
+  async function handleStatusUpdate(todoID: string) {
+    try {
+      const updatedTodos = todos.map(todo => {
+        if (todo.$id === todoID) {
+          todo.completed = !todo.completed;
+        }
+
+        return todo;
+      })
+
+      setTodos(updatedTodos);
+
+      const todoItem = await getTodoID(todoID); 
+
+      await databases.updateDocument(
+        "688e4b54001f413aa5e0",
+        "68ac581e00184d238450",
+        todoID,
+        {
+          completed: todoItem[0].completed,
+        }
+      );
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   return (
     <>
       {Object.entries(tasksList).map(([date, tasks], index) => (
@@ -61,6 +93,7 @@ const Todos = ({ data }: { data: Task[]}) => {
                 key={index}
                 task={task}
                 index={index}
+                onStatusUpdate={handleStatusUpdate}
               />
             ))}
           </div>
