@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Models } from "appwrite";
 import { databases } from "@/lib/appwrite";
 import TodoHeader from "./TodoHeader";
 import TodoItem from "./TodoItem";
@@ -21,8 +22,8 @@ type Task = {
 
 type TasksByDate = Record<string, Task[]>
 
-const Todos = ({ data }: { data: Task[]}) => {
-  const [todos, setTodos] = useState(data);
+const Todos = ({ data }) => {
+  const [todos, setTodos] = useState<Models.Document[]>(data);
   const [showModal, setShowModal] = useState(false);
 
   /*
