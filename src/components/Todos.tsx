@@ -2,25 +2,14 @@
 
 import { useState } from "react";
 import Image from "next/image";
+
 import { Models } from "appwrite";
+import { TasksByDate } from "../types";
+
 import { databases } from "@/lib/appwrite";
 import TodoHeader from "./TodoHeader";
 import TodoItem from "./TodoItem";
 import AddTodoModal from "./AddTodoModal";
-
-type Task = {
-  title: string;
-  description: string;
-  completed: boolean;
-  $id: string;
-  $sequence: number;
-  $createdAt: string;
-  $updatedAt: string;
-  $databaseId: string;
-  $collectionId: string;
-};
-
-type TasksByDate = Record<string, Task[]>
 
 const Todos = ({ data }) => {
   const [todos, setTodos] = useState<Models.Document[]>(data);
@@ -43,29 +32,26 @@ const Todos = ({ data }) => {
   }, {});
 
   function handleAddTask(newTask) {
-    setTodos([
-      newTask,
-      ...todos
-    ]);
+    setTodos([newTask, ...todos]);
   }
 
   async function getTodoID(todoID: string) {
-    return todos.filter(todo => todo.$id === todoID);
+    return todos.filter((todo) => todo.$id === todoID);
   }
 
   async function handleStatusUpdate(todoID: string) {
     try {
-      const updatedTodos = todos.map(todo => {
+      const updatedTodos = todos.map((todo) => {
         if (todo.$id === todoID) {
           todo.completed = !todo.completed;
         }
 
         return todo;
-      })
+      });
 
       setTodos(updatedTodos);
 
-      const todoItem = await getTodoID(todoID); 
+      const todoItem = await getTodoID(todoID);
 
       await databases.updateDocument(
         "688e4b54001f413aa5e0",
@@ -73,7 +59,7 @@ const Todos = ({ data }) => {
         todoID,
         {
           completed: todoItem[0].completed,
-        }
+        },
       );
     } catch (error) {
       console.log(error.message);
