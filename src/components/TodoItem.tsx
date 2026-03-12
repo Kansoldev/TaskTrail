@@ -8,18 +8,20 @@ const TodoItem: React.FC<TodoItemProps> = ({ task, index, onStatusUpdate }) => {
       }`}
     >
       <div className="todo">
-        <input
-          type="checkbox"
-          id={task.title}
-          onChange={() => onStatusUpdate(task.$id)}
-          checked={task.completed || false}
-        />
-
         <label
           htmlFor={task.title}
-          className={`ml-8 text-xl ${task.completed ? "line-through" : ""}`}
+          className={`todo-wrapper text-xl ${task.completed ? "line-through" : ""}`}
         >
-          {task.title}
+          <input
+            type="checkbox"
+            id={task.title}
+            onChange={() => onStatusUpdate(task.$id)}
+            checked={task.completed || false}
+          />
+
+          <span className="checkbox"></span>
+
+          <span className="relative left-9 bottom-[2px]">{task.title}</span>
         </label>
       </div>
     </div>
