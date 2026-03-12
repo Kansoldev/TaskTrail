@@ -12,7 +12,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ task, index, onStatusUpdate }) => {
           type="checkbox"
           id={task.title}
           onChange={() => onStatusUpdate(task.$id)}
-          checked={task.completed}
+          checked={task.completed || false}
         />
 
         <label
