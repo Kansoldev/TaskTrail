@@ -16,5 +16,4 @@ export type TodoItemProps = {
   task: Task;
   index: Number;
   onStatusUpdate: (id: string) => void;
-  onDelete: (id: string) => void;
 };
