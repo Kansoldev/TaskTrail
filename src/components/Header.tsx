@@ -1,7 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { Coiny } from "next/font/google";
 import Image from "next/image";
+import { useState } from "react";
+
+const coiny = Coiny({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const Header = () => {
   const [search, setSearch] = useState("");
@@ -11,7 +18,11 @@ const Header = () => {
       <div className="container mx-auto mb-12 mt-5 p-4">
         <div className="flex justify-between items-center">
           <div className="logo">
-            <h1 className="text-[#283655] text-4xl font-bold">TaskTrail</h1>
+            <h1
+              className={`${coiny.className} text-[#283655] text-[1.7rem] font-bold tracking-wide leading-4 mt-1`}
+            >
+              TaskTrail
+            </h1>
           </div>
 
           <div className="search-container relative hidden lg:block">
@@ -40,7 +51,7 @@ const Header = () => {
             xmlns="http://www.w3.org/2000/svg"
             width="26"
             height="12"
-            className="lg:hidden mt-2"
+            className="lg:hidden"
           >
             <g fill="#000" fillRule="evenodd">
               <path d="M0 0h24v1H0zM0 5h24v1H0zM0 10h24v1H0z" />
