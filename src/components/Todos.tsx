@@ -89,7 +89,7 @@ const Todos = ({ data }) => {
 
       <div className="xl:w-2/3">
         <button
-          className="bg-purple-600 hover:bg-purple-500 text-white transition-colors fixed bottom-5 right-4 h-[60px] w-[60px] flex justify-center items-center rounded-full"
+          className="bg-white border-2 border-[#283655] transition-colors fixed bottom-5 right-4 h-[60px] w-[60px] flex justify-center items-center rounded-full"
           onClick={() => setShowModal(!showModal)}
         >
           <Image src="/plus.svg" width={28} height={28} alt="" />

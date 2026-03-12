@@ -25,7 +25,7 @@ const Header = () => {
             </h1>
           </div>
 
-          <div className="search-container relative hidden lg:block">
+          <div className="search-container relative hidden lg:block lg:flex-1 lg:ml-20">
             <Image
               src={"/search-icon.png"}
               width={20}
@@ -37,13 +37,13 @@ const Header = () => {
             <input
               type="search"
               value={search}
-              className="bg-[#fafafa] w-[500px] text-[#283655] p-3 pl-16"
+              className="bg-[#f6f6f6] w-[500px] text-[#283655] text-sm p-3 pl-16"
               placeholder="Search for a task"
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
-          <button className="hidden lg:block px-8 py-3 bg-sky-500 hover:bg-sky-400 transition-colors text-white font-semibold text-xl rounded-md">
+          <button className="hidden lg:block px-8 py-3 bg-[#283655] hover:bg-[#455c8d] transition-colors text-white font-semibold text-xl rounded-md">
             View History
           </button>
 
